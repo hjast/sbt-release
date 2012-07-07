@@ -78,7 +78,7 @@ object ReleaseStateTransformations {
     IO.write(dir / "version.sbt", versionString)
 
     reapply(Seq(
-      version in ThisBuild := selected
+      version := selected
     ), st)
   }
 
