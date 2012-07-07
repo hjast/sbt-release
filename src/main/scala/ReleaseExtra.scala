@@ -68,10 +68,10 @@ object ReleaseStateTransformations {
     val selected = selectVersion(vs)
 
 
-    val extracted: Extracted = Project.extract(state)
+    val extracted: Extracted = Project.extract(st)
     import extracted._
 
-    val dir = extracted.get(baseDirectory).getOrElse(sys.error("No directory, something strange has happened"))
+    val dir = extracted.get(baseDirectory)
     st.log.info("Setting version to '%s' in directory '%s'." format (selected,dir))
 
     val versionString = "%sversion in ThisBuild := \"%s\"%s" format (lineSep, selected, lineSep)
