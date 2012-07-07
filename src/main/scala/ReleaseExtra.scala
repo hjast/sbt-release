@@ -74,7 +74,7 @@ object ReleaseStateTransformations {
     val dir = extracted.get(baseDirectory)
     st.log.info("Setting version to '%s' in directory '%s'." format (selected,dir))
 
-    val versionString = "%sversion in ThisBuild := \"%s\"%s" format (lineSep, selected, lineSep)
+    val versionString = "%sversion := \"%s\"%s" format (lineSep, selected, lineSep)
     IO.write(dir / "version.sbt", versionString)
 
     reapply(Seq(
