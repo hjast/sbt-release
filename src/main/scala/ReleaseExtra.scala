@@ -66,8 +66,12 @@ object ReleaseStateTransformations {
   private[sbtrelease] def setVersion(selectVersion: Versions => String): ReleaseStep =  { st: State =>
     val vs = st.get(versions).getOrElse(sys.error("No versions are set! Was this release part executed before inquireVersions?"))
     val selected = selectVersion(vs)
-    val dir = st.get(baseDirectory.key).getOrElse(sys.error("No directory, something strange has happened"))
 
+
+    val extracted: Extracted = Project.extract(state)
+    import extracted._
+
+    val dir = extracted.get(baseDirectory).getOrElse(sys.error("No directory, something strange has happened"))
     st.log.info("Setting version to '%s' in directory '%s'." format (selected,dir))
 
     val versionString = "%sversion in ThisBuild := \"%s\"%s" format (lineSep, selected, lineSep)
