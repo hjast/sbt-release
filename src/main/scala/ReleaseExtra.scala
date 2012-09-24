@@ -110,7 +110,7 @@ object ReleaseStateTransformations {
   lazy val commitNextVersion: ReleaseStep = ReleaseStep(commitVersion("Bump to %s"))
   private[sbtrelease] def commitVersion(msgPattern: String) = { st: State =>
     val v = st.extract.get(version in ThisBuild)
-    val version = st.extract.currentProject.get(version)
+    val v2 = st.extract.get(version)
 
     val info = st.extract.currentProject
     val path = info.base + "/version.sbt"
