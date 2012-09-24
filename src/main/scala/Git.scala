@@ -15,7 +15,11 @@ object Git {
     maybeIsWindows.map(_ => "git.exe").getOrElse("git")
   }
 
-  private def cmd(args: Any*): ProcessBuilder = Process(gitExec +: args.map(_.toString))
+  private def cmd(args: Any*): ProcessBuilder = {
+    val gitCmd = gitExec +: args.map(_.toString)
+    println("\ngitCmd: %s" format gitCmd)
+    Process(gitCmd)
+  }
 
   private val trackingBranchCmd = cmd("config", "branch.%s.merge" format currentBranch)
   def trackingBranch: String = (trackingBranchCmd !!).trim.stripPrefix("refs/heads/")
