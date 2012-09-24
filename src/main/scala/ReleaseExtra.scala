@@ -109,17 +109,18 @@ object ReleaseStateTransformations {
 
   lazy val commitNextVersion: ReleaseStep = ReleaseStep(commitVersion("Bump to %s"))
   private[sbtrelease] def commitVersion(msgPattern: String) = { st: State =>
-    val v = st.extract.get(version in ThisBuild)
-    val v2 = st.extract.get(version)
+    val v = st.extract.get(version)
 
-    val info = st.extract.currentProject
-    val path = info.base + "/version.sbt"
+    val currentProj = st.extract.currentProject
+    val versionName = "%s%s" format (currentProj.id, v)
+
+    val path = currentProj.base + "/version.sbt"
     println("\npath%s\n" format path)
     Git.add(path) !! st.log
     val status = (Git.status !!) trim
 
     if (status.nonEmpty) {
-      Git.commit(msgPattern format v2) ! st.log
+      Git.commit(msgPattern format versionName) ! st.log
     } else {
       // nothing to commit. this happens if the version.sbt file hasn't changed.
     }
