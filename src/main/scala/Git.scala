@@ -49,10 +49,14 @@ object Git {
 
   def status = cmd("status", "--porcelain")
 
+  /*
   def pushCurrentBranch = {
     val localBranch = currentBranch
     cmd("push", trackingRemote, "%s:%s" format (localBranch, trackingBranch))
   }
+  */
+
+  def pushCurrentBranch   = cmd("push", "origin", "master")
 
   def resetHard(hash: String) = cmd("reset", "--hard", hash)
 }
