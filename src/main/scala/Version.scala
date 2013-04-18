@@ -31,5 +31,5 @@ case class Version(major: Int, minor: Option[Int], bugfix: Option[Int], qualifie
 
   def string = "" + major + get(minor) + get(bugfix) + qualifier.getOrElse("")
 
-  private def get(part: Option[Int]) = part.map("." + _).getOrElse("")
+  private def get(part: Option[Int]) = part.map("" + _).getOrElse("")
 }
